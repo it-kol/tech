@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>沉浸式翻译 × 科技/工具类达人 · 合作参考素材</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b12;
+      --bg-panel: #0c1220;
+      --bg-card: #101828;
+      --border: rgba(255,255,255,0.08);
+      --border-bright: rgba(255,255,255,0.14);
+      --text-primary: #f0f4ff;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --cyan: #38bdf8;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+      --pink: #f472b6;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --orange: #fb923c;
+      --radius-sm: 10px;
+      --radius: 16px;
+      --radius-xl: 24px;
+      --transition: 0.2s ease;
+      --brand: #38bdf8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* ===== PARTICLES ===== */
+    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; }
+
+    /* ===== LAYOUT ===== */
+    .inner { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+    section { padding: 80px 0; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(7,11,18,0.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      height: 56px; display: flex; align-items: center;
+    }
+    .nav-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; width: 100%; display: flex; align-items: center; gap: 24px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 15px; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-sep { font-size: 14px; color: var(--text-muted); font-weight: 400; margin: 0 2px; }
+    .nav-page-name { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
+    .nav-links { display: flex; gap: 20px; margin-left: auto; }
+    .nav-links a { font-size: 13px; color: var(--text-muted); transition: color var(--transition); }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-badge { display: none; }
+    .nav-mobile-btn { display: none; margin-left: auto; background: none; border: none; color: var(--text-primary); font-size: 20px; cursor: pointer; }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-nav {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(7,11,18,0.97); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 24px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+    .mobile-nav-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-muted); font-size: 28px; cursor: pointer; }
+    .mob-btns { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; justify-content: center; }
+    .mob-btn { padding: 12px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; transition: all var(--transition); border: 1px solid transparent; }
+    .mob-btn-share { background: rgba(255,255,255,0.06); color: var(--text-primary); border-color: var(--border); }
+    .mob-btn-collab { background: rgba(56,189,248,0.12); color: var(--cyan); border: 1px solid rgba(56,189,248,0.3) !important; }
+
+    /* ===== BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+      background: rgba(7,11,18,0.95); backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 10px 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .bottom-bar-icon { font-size: 18px; flex-shrink: 0; }
+    .bottom-bar-text { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bottom-bar-url { font-size: 11px; color: var(--cyan); font-family: 'Courier New', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; }
+
+    /* ===== SIDE BTNS ===== */
+    .side-btns {
+      position: fixed; left: 16px; top: 50%; transform: translateY(-50%);
+      z-index: 80; display: flex; flex-direction: column; gap: 10px;
+    }
+    .side-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 14px; border-radius: 12px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      font-size: 15px; cursor: pointer; transition: all var(--transition);
+      color: var(--text-secondary); white-space: nowrap;
+    }
+    .side-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--border-bright); color: var(--text-primary); }
+    .side-btn-label { font-size: 12px; font-weight: 600; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #0f1929; border: 1px solid var(--border-bright); border-radius: var(--radius-xl);
+      padding: 32px; max-width: 480px; width: 90%; position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
+    .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .modal-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.7; }
+    .wx-card { display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: var(--radius); background: rgba(255,255,255,0.03); border: 1px solid var(--border); margin-bottom: 10px; }
+    .wx-platform { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .wx-info { flex: 1; }
+    .wx-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .wx-id { font-size: 12px; color: var(--cyan); font-family: 'Courier New', monospace; margin-top: 2px; }
+    .wx-copy { padding: 5px 12px; border-radius: var(--radius-sm); background: transparent; border: 1px solid var(--border); font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all var(--transition); white-space: nowrap; flex-shrink: 0; }
+    .wx-copy:hover { border-color: var(--cyan); color: var(--cyan); }
+    .wx-copy.copied { border-color: var(--green); color: var(--green); }
+
+    /* ===== SHARE MODAL ===== */
+    .share-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .share-item { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 8px; border-radius: var(--radius); background: rgba(255,255,255,0.03); border: 1px solid var(--border); cursor: pointer; transition: all var(--transition); }
+    .share-item:hover { border-color: var(--border-bright); background: rgba(255,255,255,0.06); }
+    .share-plat-icon { font-size: 24px; }
+    .share-plat-label { font-size: 11px; color: var(--text-muted); }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes gradShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+    /* ===== SECTION HEADER ===== */
+    .sec-head { text-align: center; margin-bottom: 52px; }
+    .sec-label { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+    .sec-title { font-size: 36px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 14px; }
+    .sec-desc { font-size: 15px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.8; }
+
+    /* ===== HERO ===== */
+    .hero-bg {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding-top: 80px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.1) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(167,139,250,0.07) 0%, transparent 60%),
+                  var(--bg);
+    }
+    .hero-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 100px;
+      background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2);
+      font-size: 12px; font-weight: 600; color: var(--cyan);
+      margin-bottom: 28px; animation: fadeInUp 0.6s ease both;
+    }
+    .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+    .hero-h1 {
+      font-size: 54px; font-weight: 900; line-height: 1.1; letter-spacing: -0.04em;
+      margin-bottom: 20px; animation: fadeInUp 0.6s ease 0.1s both;
+    }
+    .grad-cyan {
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6);
+      background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; animation: gradShift 4s ease infinite;
+    }
+    .hero-sub {
+      font-size: 17px; color: var(--text-secondary); line-height: 1.8;
+      margin-bottom: 36px; animation: fadeInUp 0.6s ease 0.18s both;
+    }
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; animation: fadeInUp 0.6s ease 0.26s both; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; transition: all var(--transition); border: none; }
+    .btn-lg { padding: 13px 28px; font-size: 15px; }
+    .btn-primary { background: var(--cyan); color: #07111e; }
+    .btn-primary:hover { background: #7dd3fc; transform: translateY(-1px); }
+    .btn-outline { background: transparent; border: 1px solid var(--border-bright); color: var(--text-primary); }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-landing { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3); color: var(--purple); }
+    .btn-landing:hover { background: rgba(167,139,250,0.22); }
+    .hero-chips { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; overflow-x: auto; margin-top: 36px; animation: fadeInUp 0.6s ease 0.34s both; padding-bottom: 4px; scrollbar-width: none; white-space: nowrap; }
+    .hero-chips::-webkit-scrollbar { display: none; }
+    .chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); font-size: 12px; color: var(--text-muted); }
+    .hero-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 52px 0 36px; animation: fadeInUp 0.6s ease 0.42s both; }
+    .hero-stats { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; animation: fadeInUp 0.6s ease 0.5s both; }
+    .stat { text-align: center; }
+    .stat-n { font-size: 32px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; }
+    .stat-n em { color: var(--cyan); font-style: normal; }
+    .stat-l { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+    /* ===== LOGO HERO ===== */
+    .logo-3d-wrap { position: relative; display: inline-block; flex-shrink: 0; }
+    .logo-3d-img {
+      width: 96px; height: 96px; border-radius: 24px; object-fit: cover;
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.35), 0 10px 40px rgba(56,189,248,0.4), 0 0 100px rgba(56,189,248,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
+      transform: perspective(700px) rotateX(6deg) rotateY(-8deg) rotateZ(1deg);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .logo-3d-img:hover {
+      transform: perspective(700px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.06);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.6), 0 20px 60px rgba(56,189,248,0.55), 0 0 120px rgba(56,189,248,0.25);
+    }
+    .logo-3d-glow {
+      position: absolute; inset: -16px; border-radius: 36px;
+      background: radial-gradient(ellipse, rgba(56,189,248,0.25) 0%, transparent 70%);
+      pointer-events: none; z-index: -1;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    .logo-3d-ring {
+      position: absolute; inset: -6px; border-radius: 30px;
+      border: 1px solid rgba(56,189,248,0.2);
+      pointer-events: none;
+      animation: ringPulse 3s ease-in-out infinite 0.5s;
+    }
+    .logo-3d-ring2 {
+      position: absolute; inset: -14px; border-radius: 36px;
+      border: 1px solid rgba(56,189,248,0.1);
+      pointer-events: none;
+      animation: ringPulse 3s ease-in-out infinite 1s;
+    }
+    @keyframes glowPulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+    @keyframes ringPulse { 0%,100%{opacity:0.3;transform:scale(1);} 50%{opacity:0.8;transform:scale(1.04);} }
+    .hero-logo-row { display: flex; align-items: center; justify-content: center; gap: 28px; margin-bottom: 28px; animation: fadeInUp 0.6s ease both; }
+    .hero-logo-info { text-align: left; }
+    .hero-logo-name { font-size: 20px; font-weight: 900; color: var(--text-primary); }
+    .hero-logo-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+    .hero-logo-x { font-size: 28px; font-weight: 300; color: var(--text-muted); }
+    .hero-logo-platform { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: var(--radius); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); }
+    .hero-logo-platform-icon { font-size: 32px; }
+    .hero-logo-platform-name { font-size: 18px; font-weight: 900; color: var(--text-primary); letter-spacing: 0.05em; }
+
+    /* ===== PRODUCT BRIEF ===== */
+    .brief-bg { background: var(--bg-panel); }
+    .brief-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .brief-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 22px; transition: border-color var(--transition);
+    }
+    .brief-card:hover { border-color: var(--border-bright); }
+    .brief-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .brief-card-icon { font-size: 18px; flex-shrink: 0; }
+    .brief-card-title { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+    .brief-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .brief-card ul li { font-size: 13px; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 8px; line-height: 1.6; }
+    .brief-card ul li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; margin-top: 7px; }
+    .brief-card-full { grid-column: 1 / -1; }
+    .ic-ok { color: var(--green); font-style: normal; }
+    .ic-warn { color: var(--yellow); font-style: normal; }
+    .scene-g { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .scene-card {
+      padding: 14px 16px; border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .scene-card:hover { border-color: var(--cyan); background: rgba(56,189,248,0.04); }
+    .scene-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px; }
+    .scene-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ===== BRIEF TABLE ===== */
+    .brief-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .brief-table thead tr { background: rgba(56,189,248,0.06); border-bottom: 1px solid rgba(56,189,248,0.2); }
+    .brief-table th { padding: 12px 14px; text-align: left; font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+    .brief-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary); vertical-align: top; line-height: 1.6; }
+    .brief-table td:first-child { color: var(--text-primary); white-space: nowrap; }
+    .brief-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .brief-row-alt { background: rgba(255,255,255,0.01); }
+    .brief-tag { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .brief-tag-must { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+    .brief-tag-adv { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+    .brief-tag-opt { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); }
+
+    /* ===== BRIEF ===== */
+    .script-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .script-tab {
+      padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 700;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--text-muted); cursor: pointer; transition: all var(--transition);
+    }
+    .script-tab.active { background: rgba(56,189,248,0.12); border-color: rgba(56,189,248,0.35); color: var(--cyan); }
+    .script-panel { display: none; }
+    .script-panel.active { display: block; }
+    .script-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .script-card-head {
+      padding: 24px 28px 20px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(56,189,248,0.04), transparent);
+    }
+    .script-type-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+    .script-title { font-size: 20px; font-weight: 900; margin-bottom: 6px; }
+    .script-subtitle { font-size: 13px; color: var(--text-muted); }
+    .script-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; }
+    .script-section { }
+    .script-section-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .script-section-label::before { content: ''; display: inline-block; width: 3px; height: 12px; border-radius: 2px; background: var(--cyan); }
+    .script-content { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+    .script-quote { font-size: 14px; color: var(--text-primary); line-height: 1.8; padding: 14px 18px; background: rgba(255,255,255,0.03); border-left: 3px solid var(--cyan); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .notice-box {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 16px; border-radius: var(--radius-sm);
+      background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2);
+      font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+    }
+    .notice-box strong { color: var(--yellow); }
+
+    /* ===== INSTALL ===== */
+    .install-tabs { display: flex; gap: 8px; margin-bottom: 28px; }
+    .install-tab {
+      padding: 8px 20px; border-radius: 100px; font-size: 13px; font-weight: 700;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--text-muted); cursor: pointer; transition: all var(--transition);
+    }
+    .install-tab.active { background: rgba(56,189,248,0.12); border-color: rgba(56,189,248,0.35); color: var(--cyan); }
+    .install-panel { display: none; }
+    .install-panel.active { display: block; }
+    .steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; }
+    .steps-row::before {
+      content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+    }
+    .step-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px 16px; text-align: center; position: relative; transition: border-color var(--transition);
+    }
+    .step-card:hover { border-color: var(--cyan); }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; background: rgba(56,189,248,0.12);
+      border: 1px solid rgba(56,189,248,0.3); color: var(--cyan);
+      font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .step-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .step-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== OFFICIAL VIDEO ===== */
+    .vid-wrap { border-radius: var(--radius-xl); overflow: hidden; background: var(--bg-card); border: 1px solid var(--border); }
+    .vid-topbar { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .vid-topbar-l { display: flex; align-items: center; gap: 12px; }
+    .win-dots { display: flex; gap: 5px; }
+    .win-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .wd-r { background: #ef4444; } .wd-y { background: #fbbf24; } .wd-g { background: #34d399; }
+    .vid-bar-title { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .badge-official { padding: 3px 10px; border-radius: 100px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25); font-size: 10px; font-weight: 800; color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase; }
+    .vid-player { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+    .vid-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; border: none; }
+    .vid-footer { padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .vid-footer-desc { font-size: 13px; color: var(--text-secondary); max-width: 580px; line-height: 1.7; }
+    .vid-footer-desc strong { color: var(--text-primary); }
+
+    /* ===== REF VIDEOS ===== */
+    .ref-platform-row { margin-bottom: 28px; }
+    .ref-platform-label { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .ref-platform-label-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .ref-scroll { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+    .ref-scroll::-webkit-scrollbar { height: 4px; }
+    .ref-scroll::-webkit-scrollbar-track { background: transparent; }
+    .ref-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    .ref-grid { display: block; }
+    .ref-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; transition: border-color var(--transition); display: block; text-decoration: none; color: inherit;
+      flex: 0 0 220px; width: 220px;
+    }
+    .ref-card:hover { border-color: var(--border-bright); }
+    .ref-thumb { position: relative; aspect-ratio: 16/9; background: linear-gradient(135deg, #0d1420, #1a2235); overflow: hidden; }
+    .ref-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: opacity var(--transition); }
+    .ref-card:hover .ref-thumb img { opacity: 1; }
+    .ref-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .ref-play-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(56,189,248,0.85); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .ref-platform-badge { position: absolute; top: 10px; left: 10px; padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 800; letter-spacing: 0.06em; }
+    .ref-bili { background: rgba(0,161,214,0.85); color: white; }
+    .ref-douyin { background: rgba(0,0,0,0.85); color: white; border: 1px solid rgba(255,255,255,0.2); }
+    .ref-body { padding: 16px; }
+    .ref-title { font-size: 14px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+    .ref-author { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+    .ref-stats { display: flex; gap: 14px; }
+    .ref-stat { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .ref-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .ref-tag-item { font-size: 10px; padding: 2px 8px; border-radius: 100px; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.15); color: var(--cyan); white-space: nowrap; }
+
+    /* ===== COLLAB FLOW ===== */
+    .collab-bg { background: var(--bg-panel); }
+    .flow-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .flow-step {
+      display: flex; gap: 20px; padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-step-left { display: flex; flex-direction: column; align-items: center; gap: 0; flex-shrink: 0; width: 56px; }
+    .flow-step-num {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
+      color: var(--cyan); font-size: 15px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .flow-step-line { width: 2px; flex: 1; min-height: 24px; margin-top: 4px; background: linear-gradient(to bottom, rgba(56,189,248,0.2), transparent); }
+    .flow-step:last-child .flow-step-line { display: none; }
+    .flow-step-right { flex: 1; padding-top: 6px; }
+    .flow-step-tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .fst-1 { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25); color: var(--cyan); }
+    .fst-2 { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: var(--purple); }
+    .fst-3 { background: rgba(244,114,182,0.1); border: 1px solid rgba(244,114,182,0.25); color: var(--pink); }
+    .fst-4 { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25); color: var(--yellow); }
+    .fst-5 { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); color: var(--green); }
+    .flow-step-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--text-primary); }
+    .flow-step-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+    .flow-step-items { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .flow-item { padding: 5px 12px; border-radius: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); font-size: 12px; color: var(--text-muted); }
+    .benefit-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .benefit-card { padding: 14px 16px; border-radius: var(--radius-sm); border: 1px solid; }
+    .benefit-card-yellow { background: rgba(251,191,36,0.06); border-color: rgba(251,191,36,0.2); }
+    .benefit-card-cyan { background: rgba(56,189,248,0.06); border-color: rgba(56,189,248,0.2); }
+
+    /* ===== CONTACT ===== */
+    .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--bg-panel); border-top: 1px solid var(--border); padding: 32px 0; text-align: center; }
+    .footer-desc { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .nav-mobile-btn { display: block; }
+      .side-btns { display: none; }
+      .hero-h1 { font-size: 40px; }
+      .brief-grid { grid-template-columns: 1fr; }
+      .scene-g { grid-template-columns: 1fr 1fr; }
+      .steps-row { grid-template-columns: 1fr 1fr; }
+      .steps-row::before { display: none; }
+      .ref-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .benefit-cards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero-h1 { font-size: 30px; }
+      .hero-stats { gap: 24px; }
+      .steps-row { grid-template-columns: 1fr; }
+      .scene-g { grid-template-columns: 1fr; }
+      .hero-chips { overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; padding-bottom: 6px; scrollbar-width: none; }
+      .flow-step { flex-direction: column; gap: 12px; }
+      .flow-step-left { flex-direction: row; width: auto; }
+      .flow-step-line { display: none; }
+      .bottom-bar-url { display: none; }
+      .sec-title { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663402005199/AdlZOKmKnlgVUZuk.jpg" alt="沉浸式翻译" />
+      沉浸式翻译
+    </div>
+    <span class="nav-sep">×</span>
+    <span class="nav-page-name">工具探索类达人合作页</span>
+    <div class="nav-links">
+      <a href="#brief">产品简报</a>
+      <a href="#script">脚本建议</a>
+      <a href="#install">安装指引</a>
+      <a href="#video">演示视频</a>
+      <a href="#refs">爆款参考</a>
+      <a href="#collab">合作流程</a>
+      <a href="#contact">联系我们</a>
+    </div>
+    <button class="nav-mobile-btn" onclick="openMobileNav()">☰</button>
+  </div>
+</nav>
+
+<!-- ===== MOBILE NAV ===== -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">×</button>
+  <a href="#brief" onclick="closeMobileNav()">📋 产品简报</a>
+  <a href="#script" onclick="closeMobileNav()">✍️ 脚本建议</a>
+  <a href="#install" onclick="closeMobileNav()">📦 安装指引</a>
+  <a href="#video" onclick="closeMobileNav()">▶️ 演示视频</a>
+  <a href="#refs" onclick="closeMobileNav()">🎬 爆款参考</a>
+  <a href="#collab" onclick="closeMobileNav()">🤝 合作流程</a>
+  <a href="#contact" onclick="closeMobileNav()">📱 联系我们</a>
+  <div class="mob-btns">
+    <button class="mob-btn mob-btn-share" onclick="closeMobileNav(); openShareModal()">🔗 分享给达人朋友</button>
+    <button class="mob-btn mob-btn-collab" onclick="closeMobileNav(); openCollabModal()">🤝 我要恰这个饭</button>
+  </div>
+</div>
+
+<!-- ===== BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <span class="bottom-bar-icon">📌</span>
+  <div style="flex:1;overflow:hidden">
+    <div class="bottom-bar-text">评论区必放：Landing Page 链接 + 粉丝 9 折折扣码 + 周卡抽奖——这三样直接决定转化</div>
+    <div class="bottom-bar-url">immersivetranslate.com/zh-Hans/</div>
+  </div>
+  <a href="https://immersivetranslate.com/zh-Hans/" target="_blank" style="flex-shrink:0;padding:7px 14px;border-radius:8px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.25);color:var(--cyan);font-size:12px;font-weight:700">打开 ↗</a>
+</div>
+
+<!-- ===== SIDE BTNS ===== -->
+<div class="side-btns">
+  <button class="side-btn" onclick="openShareModal()">🔗<span class="side-btn-label">分享给达人</span></button>
+  <button class="side-btn" onclick="openCollabModal()">🤝<span class="side-btn-label">我要恰这个饭</span></button>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero-bg" id="hero">
+  <div class="hero-inner">
+    <div class="hero-logo-row">
+      <div class="logo-3d-wrap">
+        <div class="logo-3d-glow"></div>
+        <div class="logo-3d-ring"></div>
+        <div class="logo-3d-ring2"></div>
+        <img class="logo-3d-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663402005199/AdlZOKmKnlgVUZuk.jpg" alt="沉浸式翻译" />
+      </div>
+      <span class="hero-logo-x">×</span>
+      <div class="hero-logo-platform">
+        <span class="hero-logo-platform-icon">🛠️</span>
+        <span class="hero-logo-platform-name">工具探索类达人</span>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <div class="pulse-dot"></div>
+      科技 / 工具探索类 KOL · 创作者合作参考素材
+    </div>
+    <h1 class="hero-h1">
+      让你的工具安利视频<br>
+      <span class="grad-cyan">多一个爆款维度</span>
+    </h1>
+    <p class="hero-sub">
+      全球 2000 万人在用的 AI 翻译插件，网页、PDF、视频字幕、输入框全覆盖。你的观众里有多少人每天要看英文内容？这个工具正好解决他们的痛点，而且基础功能完全免费。
+    </p>
+    <div class="hero-actions">
+      <a href="#brief" class="btn btn-primary btn-lg">查看产品简报</a>
+      <a href="#script" class="btn btn-outline btn-lg">获取创作灵感</a>
+      <a href="https://immersivetranslate.com/zh-Hans/" target="_blank" class="btn btn-landing btn-lg">🌐 官方 Landing Page ↗</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">🌐 网页双语翻译</span>
+      <span class="chip">📄 PDF 文档翻译</span>
+      <span class="chip">🎦 视频字幕翻译</span>
+      <span class="chip">💬 全局输入框翻译</span>
+      <span class="chip">🖼️ 图片 / 截图翻译</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n"><em>2000</em>万+</div><div class="stat-l">全球用户</div></div>
+      <div class="stat"><div class="stat-n"><em>100</em>+</div><div class="stat-l">支持语言</div></div>
+      <div class="stat"><div class="stat-n">&lt;<em>1</em>s</div><div class="stat-l">翻译延迟</div></div>
+      <div class="stat"><div class="stat-n"><em>20</em>+</div><div class="stat-l">AI 翻译引擎</div></div>
+      <div class="stat"><div class="stat-n"><em>4</em> 步</div><div class="stat-l">快速上手</div></div>
+    </div>
+    <!-- 浏览器权威背书 -->
+    <div style="margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:12px;animation:fadeInUp 0.6s ease 0.6s both">
+      <div style="font-size:11px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:20px;height:1px;background:rgba(255,255,255,0.15)"></span>各大主流浏览器授权推荐<span style="display:inline-block;width:20px;height:1px;background:rgba(255,255,255,0.15)"></span></div>
+      <div style="display:flex;align-items:stretch;gap:8px;flex-wrap:nowrap;justify-content:center">
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);min-width:130px">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlechrome.svg" style="width:18px;height:18px;filter:invert(1) opacity(0.7);flex-shrink:0" alt="Chrome" />
+          <div><div style="font-size:11px;font-weight:700;color:var(--text-primary)">Chrome</div><div style="font-size:10px;color:var(--text-muted)">2024 Favorite 🏆</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);min-width:130px">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftedge.svg" style="width:18px;height:18px;filter:invert(1) opacity(0.7);flex-shrink:0" alt="Edge" />
+          <div><div style="font-size:11px;font-weight:700;color:var(--text-primary)">Edge</div><div style="font-size:10px;color:var(--text-muted)">Editors Pick 🏆</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);min-width:130px">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/safari.svg" style="width:18px;height:18px;filter:invert(1) opacity(0.7);flex-shrink:0" alt="Safari" />
+          <div><div style="font-size:11px;font-weight:700;color:var(--text-primary)">Safari</div><div style="font-size:10px;color:var(--text-muted)">Top 10 Extensions 🏆</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);min-width:130px">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/firefox.svg" style="width:18px;height:18px;filter:invert(1) opacity(0.7);flex-shrink:0" alt="Firefox" />
+          <div><div style="font-size:11px;font-weight:700;color:var(--text-primary)">Firefox</div><div style="font-size:10px;color:var(--text-muted)">Recommended 🏆</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCT BRIEF ===== -->
+<section class="brief-bg" id="brief">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Product Brief</div>
+      <h2 class="sec-title">产品简报</h2>
+      <p class="sec-desc">录制之前，请先花 3 分钟了解这个工具的核心定位、适用场景与必须准确传达的信息。</p>
+    </div>
+    <!-- 功能表格 -->
+    <div class="brief-table-wrap reveal" style="overflow-x:auto;margin-bottom:32px">
+      <table class="brief-table">
+        <thead>
+          <tr>
+            <th>功能模块</th>
+            <th>推荐级别</th>
+            <th>典型使用场景（达人 &amp; 粉丝）</th>
+            <th>达人推荐话术 / 核心卖点（一句话）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>网页双语翻译</strong></td>
+            <td><span class="brief-tag brief-tag-must">★ 必讲</span></td>
+            <td>看英文博客、SaaS 后台、文档、新闻。</td>
+            <td>原文+译文并排，比浏览器机翻更适合深度阅读，也更方便自己校对内容。</td>
+          </tr>
+          <tr>
+            <td><strong>全局输入框翻译</strong></td>
+            <td><span class="brief-tag brief-tag-must">★ 必讲</span></td>
+            <td>在 Gmail、Slack、Discord、WhatsApp 等任何输入框，用中文打字一键变英文。</td>
+            <td>在各种聊天和邮筱里用中文思考，一键变地道英文发出去，不用再来回复制到翻译器。</td>
+          </tr>
+          <tr>
+            <td><strong>视频字幕翻译</strong></td>
+            <td><span class="brief-tag brief-tag-must">★ 必讲</span></td>
+            <td>YouTube 教程、评测、会议录像实时双语字幕，可导出。支持 YouTube 直播实时翻译（仅限自带字幕的直播）。</td>
+            <td>看英文视频直接加双语字幕，还能一键导出字幕丢进 Notion 做学习笔记。</td>
+          </tr>
+          <tr>
+            <td><strong>BabelDOC（复杂 PDF 翻译）</strong></td>
+            <td><span class="brief-tag brief-tag-must">★ 文档必讲</span></td>
+            <td>翻译合同、技术白皮书、复杂报告，保持表格、公式、多栏排版不乱。</td>
+            <td>复杂 PDF 翻译后排版不崩，底层是开源引擎，还上过 GitHub 热门榜，适合在意专业度和隐私的团队。</td>
+          </tr>
+          <tr class="brief-row-alt">
+            <td><strong>AI Write</strong></td>
+            <td><span class="brief-tag brief-tag-adv">◎ 进阶可讲</span></td>
+            <td>在 Gmail / GitHub 中一键总结长内容，生成英文回复草稿。</td>
+            <td>长篇英文邮件一键总结再起草回复，你只需要微调语气就能发。</td>
+          </tr>
+          <tr class="brief-row-alt">
+            <td><strong>会议翻译</strong></td>
+            <td><span class="brief-tag brief-tag-adv">◎ 进阶可讲</span></td>
+            <td>Zoom / Teams / Google Meet 会议实时字幕翻译。</td>
+            <td>开全球远程会议时自动出双语字幕和聊天翻译，不再“开会空耳”。</td>
+          </tr>
+          <tr class="brief-row-alt">
+            <td><strong>划词 / 悬停翻译</strong></td>
+            <td><span class="brief-tag brief-tag-opt">○ 可选 / 进阶</span></td>
+            <td>精读长文、技术文档时，对某个词或段落做快速查询。</td>
+            <td>精读时划一下或鼠标一停就出翻译，比整页机翻更精细、打扰更少。</td>
+          </tr>
+          <tr class="brief-row-alt">
+            <td><strong>图片 / 截图翻译</strong></td>
+            <td><span class="brief-tag brief-tag-opt">○ 可选 / 进阶</span></td>
+            <td>翻译软件界面截图、图表里的英文、产品包装图等。</td>
+            <td>遇到只能截图不能复制的英文，丢进来就能翻译，很适合临时救急。</td>
+          </tr>
+          <tr class="brief-row-alt">
+            <td><strong>普通 PDF / ePub 翻译</strong></td>
+            <td><span class="brief-tag brief-tag-opt">○ 可选 / 进阶</span></td>
+            <td>快速翻译排版简单的电子书、手册或报告，生成双语文件。</td>
+            <td>文档不复杂就用普通 PDF 翻译，一键生成双语版；复杂的再切到 BabelDOC 模式即可。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- 建议提及 + 技术限制 -->
+    <div class="brief-grid" style="grid-template-columns:1fr 1fr">
+      <div class="brief-card reveal">
+        <div class="brief-card-head">
+          <span class="brief-card-icon">✅</span>
+          <span class="brief-card-title">建议在视频中提到</span>
+        </div>
+        <ul>
+          <li>明确说明「基础功能完全免费」</li>
+          <li>展示双语对照效果（最直观的卖点）</li>
+          <li>与浏览器自带翻译做对比镜头</li>
+          <li>提到 Chrome 2024 年度精选这个背书</li>
+          <li>结尾说明粉丝专属折扣码 + Landing Page 链接</li>
+        </ul>
+      </div>
+      <div class="brief-card reveal">
+        <div class="brief-card-head">
+          <span class="brief-card-icon">⚠️</span>
+          <span class="brief-card-title">需要向观众说明的限制</span>
+        </div>
+        <ul>
+          <li>部分视频平台（如爱奇艺）字幕翻译支持有限</li>
+          <li>复杂 PDF 排版翻译需要使用 BabelDOC 引擎，普通模式效果有差异</li>
+          <li>免费版每月有 AI 翻译字数限制，重度用户建议 Pro</li>
+          <li>移动端 App 功能与桌面插件略有差异</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SCRIPT ===== -->
+<section id="script">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Content Ideas</div>
+      <h2 class="sec-title">内容灵感 / 脚本建议</h2>
+      <p class="sec-desc" style="white-space:nowrap;overflow:visible">4 种创作角度，每种都有完整的开场、展示和 CTA 话术参考。风格是你的，方向我们帮你想好了。</p>
+    </div>
+    <div class="script-tabs">
+      <button class="script-tab active" onclick="switchScript(0)">😤 痛点型</button>
+      <button class="script-tab" onclick="switchScript(1)">⚡ 效率型</button>
+      <button class="script-tab" onclick="switchScript(2)">🔥 安利型</button>
+      <button class="script-tab" onclick="switchScript(3)">🧪 对比测评型</button>
+    </div>
+
+    <!-- 痛点型 -->
+    <div class="script-panel active" id="script-0">
+      <div class="script-card">
+        <div class="script-card-head">
+          <div class="script-type-badge" style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:var(--yellow)">😤 痛点型</div>
+          <div class="script-title">「看英文内容，你还在用浏览器自带翻译？」</div>
+          <div class="script-subtitle">适合短视频 / 竖屏 · 60–90 秒 · 适合小红书、抖音、B站短片</div>
+        </div>
+        <div class="script-body">
+          <div class="script-section">
+            <div class="script-section-label">开场钩子（前 5 秒）</div>
+            <div class="script-quote">「你有没有遇到过这种情况——打开一个英文网站，用浏览器翻译一键翻，结果整个页面乱成一锅粥，排版全崩了？」</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">中段展示（重点演示 2 个功能）</div>
+            <div class="script-content">① 对比镜头：Chrome 自带翻译 vs 沉浸式翻译双语对照，视觉冲击最强<br>② 顺手带一下全局输入框翻译：在 Gmail 里直接中译英发邮件，不用开 ChatGPT</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">结尾 CTA</div>
+            <div class="script-quote">「完全免费，Chrome 商店直接搜'沉浸式翻译'就能装，链接放评论区了，还有粉丝专属 9 折折扣码和周卡抽奖，评论区见！」</div>
+          </div>
+          <div class="notice-box">
+            <span>🎯</span>
+            <span><strong>评论区必放：</strong>将粉丝专属 9 折折扣码与 Landing Page 链接同时置顶在评论区，并在视频结尾口播提到抽奖周卡的事。这两个动作直接影响转化效果，请务必完成。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 效率型 -->
+    <div class="script-panel" id="script-1">
+      <div class="script-card">
+        <div class="script-card-head">
+          <div class="script-type-badge" style="background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.25);color:var(--cyan)">⚡ 效率型</div>
+          <div class="script-title">「我用这个工具，把看英文资料的时间砍掉了一半」</div>
+          <div class="script-subtitle">适合中长视频 · 3–8 分钟 · 适合 B站、YouTube</div>
+        </div>
+        <div class="script-body">
+          <div class="script-section">
+            <div class="script-section-label">开场钩子（前 10 秒）</div>
+            <div class="script-quote">「作为一个每天要看大量英文资料的人，我发现了一个工具，让我的效率直接翻倍——今天带大家看看我是怎么用的。」</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">中段展示（重点演示 2 个功能）</div>
+            <div class="script-content">① 主演示：网页双语对照阅读——打开一个英文技术文档 / 论文，展示双语对照效果<br>② 顺带一提：视频字幕双语——YouTube 外语教程开双语字幕，一句话带过即可</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">结尾 CTA</div>
+            <div class="script-quote">「免费版就够用了，链接在评论区，还有粉丝专属折扣码，如果你觉得好用想升级 Pro，可以用我的码打九折。」</div>
+          </div>
+          <div class="notice-box">
+            <span>🎯</span>
+            <span><strong>评论区必放：</strong>将粉丝专属 9 折折扣码与 Landing Page 链接同时置顶在评论区，并在视频结尾口播提到抽奖周卡的事。这两个动作直接影响转化效果，请务必完成。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 安利型 -->
+    <div class="script-panel" id="script-2">
+      <div class="script-card">
+        <div class="script-card-head">
+          <div class="script-type-badge" style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);color:var(--green)">🔥 安利型</div>
+          <div class="script-title">「2000 万人都在用的翻译神器，我终于试了」</div>
+          <div class="script-subtitle">适合短视频 · 60–120 秒 · 适合抖音、小红书、B站短片</div>
+        </div>
+        <div class="script-body">
+          <div class="script-section">
+            <div class="script-section-label">开场钩子（前 5 秒）</div>
+            <div class="script-quote">「这个插件全球 2000 万人在用，还拿了谷歌 2024 年度精选，我今天终于试了一下，真的有点离谱——」</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">中段展示（重点演示 2 个功能）</div>
+            <div class="script-content">① 主演示：双语对照网页阅读，重点展示「原文 + 译文」同屏效果<br>② 顺带展示：全局输入框翻译或视频字幕，一句话带过其他功能</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">结尾 CTA</div>
+            <div class="script-quote">「免费的，Chrome 商店搜'沉浸式翻译'就能装，我在评论区放了链接，还有专属折扣码，另外我要抽 5 个小伙伴送免费周卡，评论区见！」</div>
+          </div>
+          <div class="notice-box">
+            <span>🎯</span>
+            <span><strong>评论区必放：</strong>将粉丝专属 9 折折扣码与 Landing Page 链接同时置顶在评论区，并在视频结尾口播提到抽奖周卡的事。这两个动作直接影响转化效果，请务必完成。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 对比测评型 -->
+    <div class="script-panel" id="script-3">
+      <div class="script-card">
+        <div class="script-card-head">
+          <div class="script-type-badge" style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--purple)">🧪 对比测评型</div>
+          <div class="script-title">「浏览器自带翻译 vs 沉浸式翻译，差距有多大？」</div>
+          <div class="script-subtitle">适合中视频 · 3–6 分钟 · 适合 B站、YouTube，数据向内容</div>
+        </div>
+        <div class="script-body">
+          <div class="script-section">
+            <div class="script-section-label">开场钩子（前 10 秒）</div>
+            <div class="script-quote">「今天做个测试——同一个英文页面，用 Chrome 自带翻译和沉浸式翻译分别试一下，看看差距到底有多大。」</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">中段展示（对比结构）</div>
+            <div class="script-content">① 同一英文网页：Chrome 自带翻译（全页替换，排版崩）vs 沉浸式双语对照（原文保留，译文在下方）<br>② 同一 PDF：普通翻译 vs BabelDOC（排版保留，术语一致）<br>③ 一句话带过：还支持视频字幕、输入框翻译等场景</div>
+          </div>
+          <div class="script-section">
+            <div class="script-section-label">结尾 CTA</div>
+            <div class="script-quote">「结论就是：如果你经常看英文内容，沉浸式翻译值得装。免费的，链接在评论区，还有粉丝专属折扣码和周卡抽奖，评论区见！」</div>
+          </div>
+          <div class="notice-box">
+            <span>🎯</span>
+            <span><strong>评论区必放：</strong>将粉丝专属 9 折折扣码与 Landing Page 链接同时置顶在评论区，并在视频结尾口播提到抽奖周卡的事。这两个动作直接影响转化效果，请务必完成。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTALL ===== -->
+<section class="brief-bg" id="install">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Quick Start</div>
+      <h2 class="sec-title">安装 / 上手指引</h2>
+      <p class="sec-desc">录制前先自己装一遍，4 步搞定，顺便感受一下产品体验。</p>
+    </div>
+    <div class="install-tabs">
+      <button class="install-tab active" onclick="switchInstall(0)">🖥️ 浏览器插件</button>
+      <button class="install-tab" onclick="switchInstall(1)">📱 手机 App</button>
+    </div>
+    <div class="install-panel active" id="install-0">
+      <div class="steps-row reveal">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-title">打开插件商店</div>
+          <div class="step-desc">Chrome / Edge / Firefox / Safari，在扩展商店搜索「沉浸式翻译」</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-title">点击安装</div>
+          <div class="step-desc">点击「添加到 Chrome」，等待安装完成，右上角出现插件图标</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-title">跟着引导走</div>
+          <div class="step-desc">首次安装会有使用引导，选择翻译引擎（默认免费引擎即可），一步步走完</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-title">打开英文网页试试</div>
+          <div class="step-desc">打开任意英文网站，点击插件图标或按快捷键，双语对照立刻出现</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:16px 20px;border-radius:var(--radius-sm);background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.15);font-size:13px;color:var(--text-secondary)">
+        💡 <strong style="color:var(--cyan)">录制建议：</strong>可以用 Landing Page 链接直接引导观众安装，比让他们自己搜索转化率更高。链接：<a href="https://immersivetranslate.com/zh-Hans/" target="_blank" style="color:var(--cyan)">immersivetranslate.com/zh-Hans/</a>
+      </div>
+    </div>
+    <div class="install-panel" id="install-1">
+      <div class="steps-row reveal">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-title">下载 App</div>
+          <div class="step-desc">iOS 在 App Store 搜索「沉浸式翻译」，Android 可在官网下载 APK</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-title">开启权限</div>
+          <div class="step-desc">开启「全局输入法」权限，即可在任意 App 的输入框中使用翻译功能</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-title">选择翻译引擎</div>
+          <div class="step-desc">默认免费引擎即可使用，也可接入自己的 API Key 使用 GPT-4 等模型</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-title">在 App 里试试</div>
+          <div class="step-desc">打开 WhatsApp / Telegram，在输入框里打中文，点击翻译按钮，中译英立刻完成</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OFFICIAL VIDEO ===== -->
+<section id="video" class="brief-bg">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Official Demo</div>
+      <h2 class="sec-title">官方演示视频</h2>
+      <p class="sec-desc">这是官方制作的功能演示视频，帮助你快速理解功能亮点与展示节奏。可以参考其中的操作路径，但不需要照搬，融入你自己的风格会更好。</p>
+    </div>
+    <div class="vid-wrap reveal">
+      <div class="vid-topbar">
+        <div class="vid-topbar-l">
+          <div class="win-dots">
+            <div class="win-dot wd-r"></div>
+            <div class="win-dot wd-y"></div>
+            <div class="win-dot wd-g"></div>
+          </div>
+          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663402005199/AdlZOKmKnlgVUZuk.jpg" alt="" style="width:18px;height:18px;border-radius:4px;object-fit:cover;margin-left:4px;" />
+          <div class="vid-bar-title">沉浸式翻译插件功能演示 · 官方出品</div>
+        </div>
+        <div class="badge-official">Official · B站</div>
+      </div>
+      <div class="vid-player">
+        <iframe
+          src="https://player.bilibili.com/player.html?bvid=BV1pH6FBzERQ&page=1&autoplay=0&high_quality=1&danmaku=0"
+          allowfullscreen="allowfullscreen"
+          allow="autoplay; fullscreen"
+          scrolling="no"
+          frameborder="0"
+        ></iframe>
+      </div>
+      <div class="vid-footer">
+        <div class="vid-footer-desc">
+          <strong>参考说明：</strong>这个视频由官方账号「沉浸式翻译Immersive」发布，完整展示了安装流程与核心使用场景。建议先完整看一遍，了解功能逻辑后再录制自己的版本。加入你自己的评论和真实反应会更有感染力。
+        </div>
+        <a href="https://www.bilibili.com/video/BV1pH6FBzERQ/" target="_blank" class="btn btn-outline" style="flex-shrink:0">B站查看原视频 ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REF VIDEOS ===== -->
+<section id="refs">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Reference Videos</div>
+      <h2 class="sec-title">爆款参考视频</h2>
+      <p class="sec-desc">这些都是真实跑出来的数据，可以参考他们的选题角度、封面风格和内容结构。</p>
+    </div>
+    <div class="ref-grid">
+      <!-- B站行 -->
+      <div class="ref-platform-row">
+        <div class="ref-platform-label">
+          <span class="ref-platform-label-dot" style="background:#00a1d6"></span>
+          <span style="color:#00a1d6">Bilibili</span>
+          <span>爆款参考</span>
+        </div>
+        <div class="ref-scroll">
+          <a class="ref-card" href="https://www.bilibili.com/video/BV1sozmYmEYr/" target="_blank">
+            <div class="ref-thumb">
+              <img src="http://i1.hdslb.com/bfs/archive/120408e31b47b841aa60e78d7b6a70bf92653950.jpg" alt="" />
+              <div class="ref-play"><div class="ref-play-btn">▶</div></div>
+              <div class="ref-platform-badge ref-bili">B站</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">所有人的浏览器必装的插件，打破信息差神器！【沉浸式翻译】</div>
+              <div class="ref-author">UP主：田同学Tino</div>
+              <div class="ref-stats"><div class="ref-stat">▶ 137.6万</div><div class="ref-stat">👍 11.1万</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">💡 必装工具选题</span><span class="ref-tag-item">🔥 信息差痛点开场</span></div>
+            </div>
+          </a>
+          <a class="ref-card" href="https://www.bilibili.com/video/BV1fV63YNEwb/" target="_blank">
+            <div class="ref-thumb">
+              <img src="http://i2.hdslb.com/bfs/archive/085285a39102c1bacfaf67babbf3755b0b876c38.jpg" alt="" />
+              <div class="ref-play"><div class="ref-play-btn">▶</div></div>
+              <div class="ref-platform-badge ref-bili">B站</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">【沉浸式翻译】谷歌年度精选！生产力+赚 Money 教程</div>
+              <div class="ref-author">UP主：檀东东Tango</div>
+              <div class="ref-stats"><div class="ref-stat">▶ 181.1万</div><div class="ref-stat">👍 2.2万</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">🏆 年度背书权威</span><span class="ref-tag-item">💰 收益实用角度</span></div>
+            </div>
+          </a>
+          <a class="ref-card" href="https://www.bilibili.com/video/BV173U6YBEF7/" target="_blank">
+            <div class="ref-thumb">
+              <img src="http://i2.hdslb.com/bfs/archive/dc9239bd48ce4050a7c73311aace4ab3ab23a051.jpg" alt="" />
+              <div class="ref-play"><div class="ref-play-btn">▶</div></div>
+              <div class="ref-platform-badge ref-bili">B站</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">用了就离不开的最强翻译扩展！中外对照、AI翻译、翻译漫画、翻译视频...</div>
+              <div class="ref-author">UP主：玄离199</div>
+              <div class="ref-stats"><div class="ref-stat">▶ 94.2万</div><div class="ref-stat">👍 1.8万</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">📊 功能全景与测评</span><span class="ref-tag-item">✨ 小白友好风格</span></div>
+            </div>
+          </a>
+          <a class="ref-card" href="https://www.bilibili.com/video/BV1pqwaeRE8Y/" target="_blank">
+            <div class="ref-thumb">
+              <img src="http://i2.hdslb.com/bfs/archive/f5271d933b847a252c579da0c34efce5e0314b3b.jpg" alt="" />
+              <div class="ref-play"><div class="ref-play-btn">▶</div></div>
+              <div class="ref-platform-badge ref-bili">B站</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">一用一个不吒声！谷歌年度精选最佳插件「沉浸式翻译」有多强</div>
+              <div class="ref-author">UP主：小白debug</div>
+              <div class="ref-stats"><div class="ref-stat">▶ 71.8万</div><div class="ref-stat">👍 1.1万</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">🪄 惊叹口头开场</span><span class="ref-tag-item">📱 实操演示为主</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- 抖音行 -->
+      <div class="ref-platform-row">
+        <div class="ref-platform-label">
+          <span class="ref-platform-label-dot" style="background:#fe2c55"></span>
+          <span style="color:#fe2c55">抖音</span>
+          <span>爆款参考</span>
+        </div>
+        <div class="ref-scroll">
+          <a class="ref-card" href="https://www.douyin.com/video/7555717905796762940" target="_blank">
+            <div class="ref-thumb" style="background:linear-gradient(135deg,#1a0a1e,#2d1b3d)">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+                <div style="font-size:36px">🌍</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:600">点击查看视频 ↗</div>
+              </div>
+              <div class="ref-play"><div class="ref-play-btn" style="background:rgba(254,44,85,0.85);border:none">▶</div></div>
+              <div class="ref-platform-badge ref-douyin">抖音</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">这个插件让我看英文内容的效率翻了倍！全场景功能展示</div>
+              <div class="ref-author">抖音达人</div>
+              <div class="ref-stats"><div class="ref-stat">🔗 点击查看</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">💡 工具安利选题</span><span class="ref-tag-item">🔥 功能全景展示</span></div>
+            </div>
+          </a>
+          <a class="ref-card" href="https://www.douyin.com/video/7553501234080533819" target="_blank">
+            <div class="ref-thumb" style="background:linear-gradient(135deg,#0a1a1e,#1b3d3a)">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+                <div style="font-size:36px">📚</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:600">点击查看视频 ↗</div>
+              </div>
+              <div class="ref-play"><div class="ref-play-btn" style="background:rgba(254,44,85,0.85);border:none">▶</div></div>
+              <div class="ref-platform-badge ref-douyin">抖音</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">导师不会教但你得会的文献阅读法 📚 #沉浸式翻译</div>
+              <div class="ref-author">一只眠</div>
+              <div class="ref-stats"><div class="ref-stat">🔗 点击查看</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">🎓 学术场景切入</span><span class="ref-tag-item">📝 实操教程风格</span></div>
+            </div>
+          </a>
+          <a class="ref-card" href="https://www.douyin.com/user/MS4wLjABAAAA1EoQbBircw21nV80pLeOHzQkFCw83F4lhxkK-j7coG8?modal_id=7495055146188655931" target="_blank">
+            <div class="ref-thumb" style="background:linear-gradient(135deg,#0a1020,#1b2a3d)">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+                <div style="font-size:36px">⚡</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:600">点击查看视频 ↗</div>
+              </div>
+              <div class="ref-play"><div class="ref-play-btn" style="background:rgba(254,44,85,0.85);border:none">▶</div></div>
+              <div class="ref-platform-badge ref-douyin">抖音</div>
+            </div>
+            <div class="ref-body">
+              <div class="ref-title">工具向内容必备！效率插件安利向沉浸式翻译使用教程</div>
+              <div class="ref-author">抖音达人</div>
+              <div class="ref-stats"><div class="ref-stat">🔗 点击查看</div></div>
+              <div class="ref-tags"><span class="ref-tag-item">📱 工具向必备</span><span class="ref-tag-item">⚡ 安利风格</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COLLAB FLOW ===== -->
+<section class="collab-bg" id="collab">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Collaboration</div>
+      <h2 class="sec-title">合作流程</h2>
+      <p class="sec-desc">从接触到结案，整个流程尽量简化，不占用你太多时间。</p>
+    </div>
+    <div class="flow-steps">
+      <!-- Step 1 -->
+      <div class="flow-step reveal">
+        <div class="flow-step-left">
+          <div class="flow-step-num">01</div>
+          <div class="flow-step-line"></div>
+        </div>
+        <div class="flow-step-right">
+          <div class="flow-step-tag fst-1">初步接触</div>
+          <div class="flow-step-title">双方确认合作意向</div>
+          <div class="flow-step-desc">通过页面左侧的「我要恰这个饭」按钮，添加对应平台的负责人微信。第一条消息建议说明你的平台、账号链接和大致粉丝规模，方便我们快速评估合作可行性，我们也会主动联系符合条件的创作者。</div>
+          <div class="flow-step-items">
+            <span class="flow-item">📱 微信添加对接人</span>
+            <span class="flow-item">📊 说明平台和粉丝规模</span>
+            <span class="flow-item">🔗 发送账号链接</span>
+          </div>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="flow-step reveal">
+        <div class="flow-step-left">
+          <div class="flow-step-num">02</div>
+          <div class="flow-step-line"></div>
+        </div>
+        <div class="flow-step-right">
+          <div class="flow-step-tag fst-2">商谈确认</div>
+          <div class="flow-step-title">双方确认合作内容、报价与联盟计划</div>
+          <div class="flow-step-desc">我们会与你确认视频内容方向、发布时间节点和报价。这个阶段我们会尽量简化，不会占用你太多时间。如果你已经看过这个页面，大部分内容方向都已经就绪了。</div>
+          <div class="flow-step-desc" style="margin-top:10px">此外，我们会在这一步确认你是否加入<strong style="color:var(--purple)">沉浸式翻译联盟计划</strong>——这会影响后续折扣码的配置方式。加入联盟计划后，你可以通过专属推广链接获得持续佣金收益，适合希望长期合作的创作者。</div>
+          <div class="flow-step-items">
+            <span class="flow-item">📝 内容方向确认</span>
+            <span class="flow-item">📅 发布时间确认</span>
+            <span class="flow-item">💰 报价确认</span>
+            <span class="flow-item" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.2);color:var(--purple)">🔗 联盟计划确认</span>
+          </div>
+          <div style="margin-top:12px">
+            <a href="https://immersivetranslate.com/en/affiliate/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:var(--radius-sm);background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.25);color:var(--purple);font-size:12px;font-weight:600;text-decoration:none;transition:all var(--transition)">🔗 了解联盟计划详情 ↗</a>
+          </div>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="flow-step reveal">
+        <div class="flow-step-left">
+          <div class="flow-step-num">03</div>
+          <div class="flow-step-line"></div>
+        </div>
+        <div class="flow-step-right">
+          <div class="flow-step-tag fst-3">合同与预付</div>
+          <div class="flow-step-title">签署合同，预付部分报价</div>
+          <div class="flow-step-desc">双方确认合作细节后，签署合作合同并预付部分报价。合同中会明确内容要求、发布时间和报价方式，保障双方权益。</div>
+          <div class="flow-step-items">
+            <span class="flow-item">📄 签署合同</span>
+            <span class="flow-item">💳 预付部分报价</span>
+            <span class="flow-item">🔒 权益保障</span>
+          </div>
+        </div>
+      </div>
+      <!-- Step 4 -->
+      <div class="flow-step reveal">
+        <div class="flow-step-left">
+          <div class="flow-step-num">04</div>
+          <div class="flow-step-line"></div>
+        </div>
+        <div class="flow-step-right">
+          <div class="flow-step-tag fst-4">创作与审核</div>
+          <div class="flow-step-title">自由创作，两个节点对齐一下就行</div>
+          <div class="flow-step-desc">我们鼓励你用自己的风格和语言创作，不需要按照脚本字字照念。有两个轻量审核节点：<strong style="color:var(--text-primary)">①脚本审核</strong>——开拍前我们确认一下关键信息有没有跑偏；<strong style="color:var(--text-primary)">②视频审核</strong>——发布前快速过一遍，主要是避免误导观众，不干涉你的内容风格。</div>
+          <div class="flow-step-items">
+            <span class="flow-item">🎨 自由创作，风格自定</span>
+            <span class="flow-item">📝 脚本审核（开拍前）</span>
+            <span class="flow-item">🎬 视频审核（发布前）</span>
+          </div>
+        </div>
+      </div>
+      <!-- Step 5 -->
+      <div class="flow-step reveal">
+        <div class="flow-step-left">
+          <div class="flow-step-num">05</div>
+          <div class="flow-step-line"></div>
+        </div>
+        <div class="flow-step-right">
+          <div class="flow-step-tag fst-5">发布与结案</div>
+          <div class="flow-step-title">视频上线，尾款到账</div>
+          <div class="flow-step-desc">视频按时发布后，将 Landing Page 链接与粉丝专属折扣码置顶在评论区，并将视频链接反馈给我们。我们核实发布后，将尾款打到你的账户。</div>
+          <div class="benefit-cards">
+            <div class="benefit-card benefit-card-yellow">
+              <div style="font-size:11px;font-weight:800;color:var(--yellow);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px">🎁 粉丝福利 · 免费周卡抽奖</div>
+              <div style="font-size:13px;color:var(--text-primary);font-weight:600;margin-bottom:4px">免费周卡 × 至少 5 张</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">我们会提供至少 5 张免费周卡，供你在评论区或视频结尾展开抽奖互动，提升观众参与感与转化。</div>
+            </div>
+            <div class="benefit-card benefit-card-cyan">
+              <div style="font-size:11px;font-weight:800;color:var(--cyan);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px">🏷️ 粉丝专属折扣</div>
+              <div style="font-size:13px;color:var(--text-primary);font-weight:600;margin-bottom:4px">Pro 专属 9 折折扣码</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">你的粉丝通过专属折扣码购买 Pro 可享 9 折。这个码必须在评论区置顶或视频结尾提到，直接影响转化效果。</div>
+            </div>
+          </div>
+          <div class="flow-step-items" style="margin-top:12px">
+            <span class="flow-item">🚀 视频按时发布</span>
+            <span class="flow-item">🔗 评论区置顶链接与折扣码</span>
+            <span class="flow-item" style="background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.2);color:var(--yellow)">🎁 抽奖周卡已就位</span>
+            <span class="flow-item">💰 尾款到账</span>
+          </div>
+        </div>
+      </div>
+      <!-- Step 6 -->
+      <div class="flow-step reveal">
+        <div class="flow-step-left">
+          <div class="flow-step-num">06</div>
+          <div class="flow-step-line"></div>
+        </div>
+        <div class="flow-step-right">
+          <div class="flow-step-tag" style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);color:var(--green)">专属福利</div>
+          <div class="flow-step-title">发布后一周，我们帮你免费投流 🎁</div>
+          <div class="flow-step-desc">视频发布后的第一周，我们会持续观察自然流量表现。如果数据跑得不错，我们会根据情况酌情为你的视频进行<strong style="color:var(--green)">免费投流加热</strong>，帮你触达更多潜在观众——这是我们对合作创作者的额外回馈，不是所有合作都有，但我们会尽量争取。</div>
+          <div class="flow-step-items">
+            <span class="flow-item">📊 发布后一周数据观察</span>
+            <span class="flow-item">🚀 酌情免费投流加热</span>
+            <span class="flow-item">🎯 触达更多潜在观众</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Contact</div>
+      <h2 class="sec-title">联系我们</h2>
+      <p class="sec-desc">根据你主要创作的平台，直接添加对应同事的微信，说明平台和粉丝规模，我们会尽快回复。</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="wx-card">
+        <div class="wx-platform" style="background:#fff1f2;overflow:hidden"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Xiaohongshu_logo.svg/512px-Xiaohongshu_logo.svg.png" alt="小红书" style="width:100%;height:100%;object-fit:contain;padding:4px" onerror="this.parentNode.innerHTML='🍠'" /></div>
+        <div class="wx-info">
+          <div class="wx-name">Sherry · 小红书负责人</div>
+          <div class="wx-id">yuning102</div>
+        </div>
+        <button class="wx-copy" onclick="copyWx(this,'yuning102')">复制微信号</button>
+      </div>
+      <div class="wx-card">
+        <div class="wx-platform" style="background:#000;overflow:hidden"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/TikTok_logo.svg/512px-TikTok_logo.svg.png" alt="抖音" style="width:100%;height:100%;object-fit:contain;padding:4px" onerror="this.parentNode.innerHTML='🎵'" /></div>
+        <div class="wx-info">
+          <div class="wx-name">马丽 · 抖音负责人</div>
+          <div class="wx-id">ma314227840</div>
+        </div>
+        <button class="wx-copy" onclick="copyWx(this,'ma314227840')">复制微信号</button>
+      </div>
+      <div class="wx-card">
+        <div class="wx-platform" style="background:#00a1d6;overflow:hidden;display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:14px;font-weight:900">B</span></div>
+        <div class="wx-info">
+          <div class="wx-name">慧颖 · B站 / 视频号负责人</div>
+          <div class="wx-id">Goldfish-74</div>
+        </div>
+        <button class="wx-copy" onclick="copyWx(this,'Goldfish-74')">复制微信号</button>
+      </div>
+      <div class="wx-card">
+        <div class="wx-platform" style="background:#0066ff;overflow:hidden;display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:9px;font-weight:900;letter-spacing:-0.5px">知乎</span></div>
+        <div class="wx-info">
+          <div class="wx-name">Yara · 知乎负责人</div>
+          <div class="wx-id">z15201126125</div>
+        </div>
+        <button class="wx-copy" onclick="copyWx(this,'z15201126125')">复制微信号</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="inner">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663402005199/AdlZOKmKnlgVUZuk.jpg" style="width:24px;height:24px;border-radius:6px;object-fit:cover" alt="" />
+      <span style="font-size:15px;font-weight:800">沉浸式翻译</span>
+    </div>
+    <div class="footer-desc">全球 2000 万用户信赖的 AI 翻译工具 · 科技 / 工具探索类达人合作素材</div>
+    <div style="margin-top:16px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap">
+      <a href="https://immersivetranslate.com/zh-Hans/" target="_blank" style="font-size:12px;color:var(--text-muted)">官方网站</a>
+      <a href="https://immersivetranslate.com/en/affiliate/" target="_blank" style="font-size:12px;color:var(--text-muted)">联盟计划</a>
+      <a href="#brief" style="font-size:12px;color:var(--text-muted)">产品简报</a>
+      <a href="#script" style="font-size:12px;color:var(--text-muted)">脚本建议</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== COLLAB MODAL ===== -->
+<div class="modal-overlay" id="collabModal" onclick="closeModal('collabModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('collabModal')">×</button>
+    <div class="modal-title">🤝 我要恰这个饭</div>
+    <div class="modal-sub">根据你主要创作平台，直接添加对应同事的微信，说明你的平台和粉丝规模，并发送你的账号链接，我们会尽快回复。</div>
+    <div class="wx-card">
+      <div class="wx-platform" style="background:#fff1f2;overflow:hidden"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Xiaohongshu_logo.svg/512px-Xiaohongshu_logo.svg.png" alt="小红书" style="width:100%;height:100%;object-fit:contain;padding:4px" onerror="this.parentNode.innerHTML='🍠'" /></div>
+      <div class="wx-info"><div class="wx-name">Sherry · 小红书负责人</div><div class="wx-id">yuning102</div></div>
+      <button class="wx-copy" onclick="copyWx(this,'yuning102')">复制微信号</button>
+    </div>
+    <div class="wx-card">
+      <div class="wx-platform" style="background:#000;overflow:hidden"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/TikTok_logo.svg/512px-TikTok_logo.svg.png" alt="抖音" style="width:100%;height:100%;object-fit:contain;padding:4px" onerror="this.parentNode.innerHTML='🎵'" /></div>
+      <div class="wx-info"><div class="wx-name">马丽 · 抖音负责人</div><div class="wx-id">ma314227840</div></div>
+      <button class="wx-copy" onclick="copyWx(this,'ma314227840')">复制微信号</button>
+    </div>
+    <div class="wx-card">
+      <div class="wx-platform" style="background:#00a1d6;overflow:hidden;display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:14px;font-weight:900">B</span></div>
+      <div class="wx-info"><div class="wx-name">慧颖 · B站 / 视频号负责人</div><div class="wx-id">Goldfish-74</div></div>
+      <button class="wx-copy" onclick="copyWx(this,'Goldfish-74')">复制微信号</button>
+    </div>
+    <div class="wx-card">
+      <div class="wx-platform" style="background:#0066ff;overflow:hidden;display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:9px;font-weight:900;letter-spacing:-0.5px">知乎</span></div>
+      <div class="wx-info"><div class="wx-name">Yara · 知乎负责人</div><div class="wx-id">z15201126125</div></div>
+      <button class="wx-copy" onclick="copyWx(this,'z15201126125')">复制微信号</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SHARE MODAL ===== -->
+<div class="modal-overlay" id="shareModal" onclick="closeModal('shareModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('shareModal')">×</button>
+    <div class="modal-title">🔗 分享给达人朋友</div>
+    <div class="modal-sub">把这个页面分享给你认识的科技 / 工具类创作者，帮他们发现这个合作机会。</div>
+    <div class="share-grid">
+      <div class="share-item" onclick="shareToWechat()">
+        <span class="share-plat-icon">💬</span>
+        <span class="share-plat-label">微信 / 朋友圈</span>
+      </div>
+      <div class="share-item" onclick="shareToWeibo()">
+        <span class="share-plat-icon">🔴</span>
+        <span class="share-plat-label">微博</span>
+      </div>
+      <div class="share-item" onclick="copyLink()">
+        <span class="share-plat-icon">📋</span>
+        <span class="share-plat-label">复制链接</span>
+      </div>
+    </div>
+    <div id="copyLinkTip" style="display:none;margin-top:14px;padding:10px 14px;border-radius:8px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);font-size:13px;color:var(--green);text-align:center">✅ 链接已复制到剪贴板</div>
+  </div>
+</div>
+
+<script>
+  // ===== BILIBILI COVERS =====
+  // 通过 Bilibili API 获取真实封面图
+  async function loadBiliCovers() {
+    const bvids = [
+      { bvid: 'BV1sozmYmEYr', selector: '[data-bvid="BV1sozmYmEYr"]' },
+    ];
+    // 直接使用 hdslb CDN 的封面图格式
+    document.querySelectorAll('.ref-thumb img[data-bvid]').forEach(img => {
+      const bvid = img.dataset.bvid;
+      img.src = `https://i0.hdslb.com/bfs/archive/${bvid}.jpg`;
+      img.onerror = function() {
+        this.style.display = 'none';
+      };
+    });
+  }
+  loadBiliCovers();
+
+  // ===== PARTICLES =====
+  (function() {
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, pts = [];
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    function init() {
+      pts = [];
+      for (let i = 0; i < 60; i++) {
+        pts.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3, r: Math.random()*1.5+0.5 });
+      }
+    }
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(56,189,248,0.6)'; ctx.fill();
+      });
+      pts.forEach((a,i) => {
+        pts.slice(i+1).forEach(b => {
+          const d = Math.hypot(a.x-b.x, a.y-b.y);
+          if (d < 120) {
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle = `rgba(56,189,248,${0.12*(1-d/120)})`; ctx.lineWidth = 0.5; ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', () => { resize(); init(); });
+    resize(); init(); draw();
+  })();
+
+  // ===== 3D LOGO TILT =====
+  const logo3d = document.querySelector('.logo-3d-img');
+  if (logo3d) {
+    document.querySelector('.logo-3d-wrap').addEventListener('mousemove', (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const rx = ((e.clientY - cy) / rect.height) * -20;
+      const ry = ((e.clientX - cx) / rect.width) * 20;
+      logo3d.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.05)`;
+    });
+    document.querySelector('.logo-3d-wrap').addEventListener('mouseleave', () => {
+      logo3d.style.transform = 'perspective(600px) rotateX(8deg) rotateY(-6deg)';
+    });
+  }
+
+  // ===== REVEAL =====
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ===== TABS =====
+  function switchScript(i) {
+    document.querySelectorAll('.script-tab').forEach((t,j) => t.classList.toggle('active', i===j));
+    document.querySelectorAll('.script-panel').forEach((p,j) => p.classList.toggle('active', i===j));
+  }
+  function switchInstall(i) {
+    document.querySelectorAll('.install-tab').forEach((t,j) => t.classList.toggle('active', i===j));
+    document.querySelectorAll('.install-panel').forEach((p,j) => p.classList.toggle('active', i===j));
+  }
+
+  // ===== MOBILE NAV =====
+  function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); }
+  function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+
+  // ===== MODAL =====
+  function openCollabModal() { document.getElementById('collabModal').classList.add('open'); }
+  function openShareModal() { document.getElementById('shareModal').classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  // ===== COPY WX =====
+  function copyWx(btn, id) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(id).then(() => { btn.textContent = '已复制 ✓'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '复制微信号'; btn.classList.remove('copied'); }, 2000); });
+    } else {
+      const ta = document.createElement('textarea'); ta.value = id; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = '已复制 ✓'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '复制微信号'; btn.classList.remove('copied'); }, 2000);
+    }
+  }
+
+  // ===== SHARE =====
+  function shareToWechat() { alert('请截图或复制链接，通过微信分享给朋友。'); }
+  function shareToWeibo() { window.open('https://service.weibo.com/share/share.php?url='+encodeURIComponent(location.href)+'&title=沉浸式翻译×工具类达人合作参考页面', '_blank'); }
+  function copyLink() {
+    navigator.clipboard.writeText(location.href).then(() => {
+      document.getElementById('copyLinkTip').style.display = 'block';
+      setTimeout(() => { document.getElementById('copyLinkTip').style.display = 'none'; }, 3000);
+    });
+  }
+</script>
+</body>
+</html>
