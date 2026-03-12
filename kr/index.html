@@ -66,13 +66,13 @@
       border-bottom: 1px solid var(--border);
       height: 56px; display: flex; align-items: center;
     }
-    .nav-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; width: 100%; display: flex; align-items: center; gap: 24px; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 15px; }
-    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
-    .nav-sep { font-size: 14px; color: var(--text-muted); font-weight: 400; margin: 0 2px; }
-    .nav-page-name { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
-    .nav-links { display: flex; gap: 18px; margin-left: auto; }
-    .nav-links a { font-size: 12px; color: var(--text-muted); transition: color var(--transition); font-weight: 500; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; width: 100%; display: flex; align-items: center; gap: 0; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; flex-shrink: 0; white-space: nowrap; }
+    .nav-logo img { width: 26px; height: 26px; border-radius: 7px; }
+    .nav-sep { font-size: 13px; color: var(--text-muted); font-weight: 400; margin: 0 6px; flex-shrink: 0; }
+    .nav-page-name { font-size: 12px; font-weight: 600; color: var(--text-secondary); flex-shrink: 0; white-space: nowrap; }
+    .nav-links { display: flex; gap: 14px; margin-left: auto; flex-shrink: 0; }
+    .nav-links a { font-size: 11px; color: var(--text-muted); transition: color var(--transition); font-weight: 500; white-space: nowrap; }
     .nav-links a:hover { color: var(--text-primary); }
     .nav-mobile-btn { display: none; margin-left: auto; background: none; border: none; color: var(--text-primary); font-size: 20px; cursor: pointer; }
 
@@ -518,13 +518,14 @@
       <span class="grad-cyan">바이럴 포인트를 하나 더</span>
     </h1>
     <p class="hero-sub">
-      전 세계 2,000만 명이 사용하는 AI 번역 확장 프로그램. 웹페이지, PDF, 영상 자막, 입력창까지 모두 지원합니다. 구독자 중에 영어 콘텐츠를 매일 접하는 분이 얼마나 될까요? 이 툴이 바로 그 불편함을 해결해 드립니다. 기본 기능은 완전 무료입니다.
+      전 세계 2,000만 명이 사용하는 AI 번역 확장 프로그램 &mdash; 웹페이지, PDF, 영상 자막, 입력창까지 모두 지원.<br>
+      구독자의 영어 콘텐츠 불편함을 해결하는 무료 툴입니다.
     </p>
-    <div class="hero-actions">
-      <a href="#brief" class="btn btn-primary btn-lg">제품 브리핑 보기</a>
-      <a href="#script" class="btn btn-outline btn-lg">콘텐츠 아이디어 얻기</a>
-      <a href="https://immersivetranslate.com/ko/" target="_blank" class="btn btn-landing btn-lg">🌐 공식 홈페이지 ↗</a>
-      <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663402005199/PXUqaowsmyaxFVeL.jpg" target="_blank" download="Immersive-Translate-Logo.jpg" class="btn btn-download-logo btn-lg">⬇ 로고 다운로드</a>
+    <div class="hero-actions" style="flex-wrap:nowrap;gap:10px;">
+      <a href="#brief" class="btn btn-primary" style="padding:11px 18px;font-size:13px;">제품 브리핑</a>
+      <a href="#script" class="btn btn-outline" style="padding:11px 18px;font-size:13px;">콘텐츠 아이디어</a>
+      <a href="https://immersivetranslate.com/ko/" target="_blank" class="btn btn-landing" style="padding:11px 18px;font-size:13px;">🌐 공식 홈페이지 ↗</a>
+      <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663402005199/PXUqaowsmyaxFVeL.jpg" target="_blank" download="Immersive-Translate-Logo.jpg" class="btn btn-download-logo" style="padding:11px 18px;font-size:13px;">⬇ 로고 다운로드</a>
     </div>
     <div class="hero-chips">
       <span class="chip">🌐 웹페이지 이중 언어 번역</span>
