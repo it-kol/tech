@@ -756,47 +756,75 @@
   </section>
 
   <!-- ===== PRIVACY ===== -->
-  <section id="privacy">
-    <div class="inner">
-      <div class="sec-head reveal">
-        <div class="sec-label">Privacy & Security</div>
-        <h2 class="sec-title">Your Data Stays Private</h2>
-        <p class="sec-desc">Privacy is a top concern for many users — especially when translating work documents or sensitive content. Here's what you can tell your audience.</p>
-      </div>
-      <div class="privacy-grid reveal">
-        <div class="privacy-card">
-          <div class="privacy-ico">🔒</div>
-          <div class="privacy-title">No Content Stored</div>
-          <div class="privacy-desc">Translated content is never saved to any server. Everything is processed in real time and discarded immediately.</div>
-        </div>
-        <div class="privacy-card">
-          <div class="privacy-ico">🚫</div>
-          <div class="privacy-title">Not Used for AI Training</div>
-          <div class="privacy-desc">Your translation data is never used to train AI models — not ours, not anyone else's.</div>
-        </div>
-        <div class="privacy-card">
-          <div class="privacy-ico">🛡️</div>
-          <div class="privacy-title">End-to-End Encrypted</div>
-          <div class="privacy-desc">All translation requests are sent over encrypted HTTPS connections. Your content is protected in transit.</div>
-        </div>
-        <div class="privacy-card">
-          <div class="privacy-ico">✅</div>
-          <div class="privacy-title">GDPR Compliant</div>
-          <div class="privacy-desc">Immersive Translate complies with GDPR and major international privacy regulations.</div>
-        </div>
-      </div>
-      <div class="privacy-badges reveal">
-        <span class="privacy-badge">🔒 Zero Data Retention</span>
-        <span class="privacy-badge">🚫 No AI Training</span>
-        <span class="privacy-badge">🛡️ HTTPS Encrypted</span>
-        <span class="privacy-badge">✅ GDPR Compliant</span>
-        <span class="privacy-badge">🌍 Open Source</span>
-      </div>
-      <div class="privacy-tip reveal">
-        💡 <strong>Creator Tip:</strong> Adding one line like <em>"Your translation data is never stored or used for AI training"</em> can significantly boost trust — especially for viewers who handle work documents or sensitive content.
-      </div>
+<section id="privacy" style="background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%);padding:48px 0">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Privacy</div>
+      <h2 class="sec-title">Privacy Protection</h2>
+      <p class="sec-desc">Translation content often involves sensitive information. Immersive Translate places privacy protection at the core of its product design.</p>
     </div>
-  </section>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px">
+
+      <!-- Privacy Mode -->
+      <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.15)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔒</div>
+          <div>
+            <div style="font-size:15px;font-weight:800;color:#0c4a6e">Privacy Mode (OneAIFW)</div>
+            <div style="font-size:11px;color:#0ea5e9;font-weight:600">Local Anonymization · No Plaintext in Cloud</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:#374151;line-height:1.7">
+          Uses a closed-loop process: <strong>Local Detection → Local Anonymization → Cloud Translation → Local Restoration</strong>. Sensitive data such as names, addresses, bank card numbers, passwords, and private keys <strong>never leave the user's device.</strong>
+        </div>
+        <ul style="margin:10px 0 0;padding-left:16px;font-size:12px;color:#6b7280;line-height:1.8">
+          <li>Sensitive info replaced with anonymous placeholders; cloud only processes anonymized text</li>
+          <li>Anonymized data stored in browser RAM only, auto-cleared on browser close</li>
+          <li>Open-sourced under MIT license, publicly auditable by the community</li>
+        </ul>
+      </div>
+
+      <!-- Zero Data Retention -->
+      <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🛡️</div>
+          <div>
+            <div style="font-size:15px;font-weight:800;color:#064e3b">Zero Data Retention</div>
+            <div style="font-size:11px;color:#10b981;font-weight:600">No Storage · No Training · Fully Encrypted</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:#374151;line-height:1.7">
+          <strong>Zero retention</strong> of translation content: no storage of translated text, webpages, or documents. Translation requests and AI results are <strong>never used for model training.</strong>
+        </div>
+        <ul style="margin:10px 0 0;padding-left:16px;font-size:12px;color:#6b7280;line-height:1.8">
+          <li>All translation requests are encrypted in transit</li>
+          <li>Only anonymous usage statistics collected (frequency, device model, IP region)</li>
+          <li>Google Analytics and similar tools can be managed via browser settings</li>
+        </ul>
+      </div>
+
+      <!-- Security & Privacy Contact -->
+      <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📋</div>
+          <div>
+            <div style="font-size:15px;font-weight:800;color:#3b0764">Security Incidents & Privacy Contact</div>
+            <div style="font-size:11px;color:#8b5cf6;font-weight:600">Compliant Response · Replied Within 1 Month</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:#374151;line-height:1.7">
+          Established Information Security Incident Management Procedures and Emergency Response policies. In the event of a data breach, remediation actions are taken in accordance with applicable laws, and regulators and affected users are notified.
+        </div>
+        <ul style="margin:10px 0 0;padding-left:16px;font-size:12px;color:#6b7280;line-height:1.8">
+          <li>Privacy inquiries: <strong>support@immersivetranslate.com</strong></li>
+          <li>All queries responded to within one month</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
   <!-- ===== SCRIPT IDEAS ===== -->
   <section id="script">
